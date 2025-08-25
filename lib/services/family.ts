@@ -8,6 +8,14 @@ export const familyService = {
   // Create a new family and make the current user the admin
   async createFamily(familyName: string): Promise<{ family: Family; error: null } | { family: null; error: string }> {
     try {
+      // First ensure user record exists
+      const { error: ensureError } = await supabase.rpc('ensure_user_record')
+      
+      if (ensureError) {
+        console.warn('Failed to ensure user record:', ensureError)
+        // Continue anyway, as the user might already exist
+      }
+
       const { data, error } = await supabase.rpc('create_family_with_admin', {
         family_name: familyName
       })
@@ -29,6 +37,7 @@ export const familyService = {
 
       return { family, error: null }
     } catch (err) {
+      console.error('Create family error:', err)
       return { family: null, error: 'Failed to create family' }
     }
   },

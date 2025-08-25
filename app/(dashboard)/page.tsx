@@ -4,10 +4,18 @@ import { redirect } from 'next/navigation'
 
 async function getOrCreateFamilyData() {
   const supabase = createClient()
-  const { context } = await serverFamilyService.getUserFamilyContext()
   
-  // If user doesn't have a family, redirect to onboarding
-  if (!context?.family_id) {
+  // First ensure we have a user
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    redirect('/login')
+  }
+
+  // Try to get family context
+  const { context, error } = await serverFamilyService.getUserFamilyContext()
+  
+  // If there's an error or no family context, redirect to onboarding
+  if (error || !context || !context.family_id) {
     redirect('/onboarding')
   }
 

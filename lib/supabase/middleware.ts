@@ -44,7 +44,12 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname.startsWith('/signup') && user) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+    return NextResponse.redirect(new URL('/onboarding', request.url))
+  }
+
+  // Allow access to onboarding for authenticated users
+  if (request.nextUrl.pathname.startsWith('/onboarding') && !user) {
+    return NextResponse.redirect(new URL('/login', request.url))
   }
 
   return supabaseResponse
