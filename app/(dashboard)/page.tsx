@@ -1,4 +1,4 @@
-import { serverFamilyService } from '@/lib/services/family'
+import { serverFamilyService } from '@/lib/services/family-server'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 

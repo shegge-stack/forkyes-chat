@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { serverFamilyService } from '@/lib/services/family'
+import { serverFamilyService } from '@/lib/services/family-server'
 import { aiService } from '@/lib/services/openai'
 
 export async function POST(request: NextRequest) {

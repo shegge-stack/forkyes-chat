@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { serverFamilyService } from '@/lib/services/family'
+import { serverFamilyService } from '@/lib/services/family-server'
 
 export default async function DebugPage() {
   const supabase = createClient()
